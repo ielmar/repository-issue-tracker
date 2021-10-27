@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
-import Table from './Table';
-import Line from './Line';
-import './App.css';
+import { useState, useEffect } from "react";
+import Table from "./Table";
+import Line from "./Line";
+import "./App.css";
 
 export default function App() {
-  const [repo, setRepo] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [repo, setRepo] = useState("");
+  const [loading, setLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [openIssues, setOpenIssues] = useState([]);
@@ -19,10 +18,10 @@ export default function App() {
     )
       .then((res) => res.json())
       .then((issues) => {
-        if(issues.message === 'Not Found')
-          setIsEmpty(true)
+        console.log(issues)
+        if (issues.message === "Not Found") setIsEmpty(true);
         else {
-          const previousOpenIssues = openIssues
+          const previousOpenIssues = openIssues;
           setOpenIssues(previousOpenIssues.concat(issues));
         }
       });
@@ -33,34 +32,32 @@ export default function App() {
     )
       .then((res) => res.json())
       .then((issues) => {
-        if(issues.message === 'Not Found')
-          setIsEmpty(true)
+        if (issues.message === "Not Found") setIsEmpty(true);
         else {
-          const previousClosedIssues = closedIssues
+          const previousClosedIssues = closedIssues;
           setClosedIssues(previousClosedIssues.concat(issues));
         }
       });
-  }
+  };
 
   const getRepositoryData = (e) => {
     e.preventDefault();
 
     if (repo.length === 0) setIsEmpty(true);
     else {
-    setLoading(true)
+      setLoading(true);
 
-    LoadIssuesData()
+      LoadIssuesData();
     }
   };
 
   useEffect(() => {
-    if(pageNo > 1)
-      LoadIssuesData()
-  }, [pageNo])
+    if (pageNo > 1) LoadIssuesData();
+  }, [pageNo]);
 
   return (
     <div className="App">
-      {(openIssues.length === 0 || closedIssues.length === 0) ? (
+      {openIssues.length === 0 || closedIssues.length === 0 ? (
         <form onSubmit={(e) => getRepositoryData(e)}>
           <label htmlFor="repo_link">
             <p>Enter the repository link to get open and closed issues</p>
@@ -78,10 +75,11 @@ export default function App() {
         <>
           <Table openIssues={openIssues} closedIssues={closedIssues} />
           <Line openIssues={openIssues} closedIssues={closedIssues} />
-          <button className='load_more' onClick={() => setPageNo(pageNo + 1)}>Load more</button>
+          <button className="load_more" onClick={() => setPageNo(pageNo + 1)}>
+            Load more
+          </button>
         </>
       )}
     </div>
   );
 }
-
