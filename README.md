@@ -19,4 +19,5 @@ This is built on a create-react app but then changed to use Vite.
 - Add Tailwind to the repository for better visuals
 - Add posibility to save the given reposity name in localStorage to show the same reposity next time the user opens the page
 - Add posibility to save more than one repository and change the respositories to see the data and the graph
-
+- Add Typescript
+- Add Test using Jest
